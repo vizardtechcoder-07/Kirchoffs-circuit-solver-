@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kirchhoff’s Law Solver</title>
+</head>
+<body>
+  <h2>Kirchhoff’s Current Law Calculator</h2>
+  <p>Enter currents leaving or entering a node (use + for leaving, − for entering):</p>
+
+  <input type="number" id="i1" placeholder="I₁ (A)">  
+  <input type="number" id="i2" placeholder="I₂ (A)">  
+  <input type="number" id="i3" placeholder="I₃ (A)">  
+  <button onclick="solveKCL()">Solve</button>
+
+  <h3 id="result"></h3>
+
+  <script>
+    function solveKCL() {
+      let i1 = parseFloat(document.getElementById("i1").value) || 0;
+      let i2 = parseFloat(document.getElementById("i2").value) || 0;
+      let i3 = parseFloat(document.getElementById("i3").value) || 0;
+
+      let sum = i1 + i2 + i3;
+      let resultText = Math.abs(sum) < 0.001
+        ? "✅ KCL satisfied: ΣI = 0"
+        : "❌ KCL not satisfied, ΣI = " + sum.toFixed(2) + " A";
+
+      document.getElementById("result").innerText = resultText;
+    }
+  </script>
+</body>
+</html>
