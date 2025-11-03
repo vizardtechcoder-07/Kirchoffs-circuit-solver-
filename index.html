@@ -4,30 +4,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kirchhoff’s Law Solver</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input {
+      margin: 5px;
+      padding: 8px;
+      width: 120px;
+    }
+    button {
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #result {
+      font-size: 18px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
   <h2>Kirchhoff’s Current Law Calculator</h2>
-  <p>Enter currents leaving or entering a node (use + for leaving, − for entering):</p>
+  <p>Enter currents leaving or entering a node (use + for leaving, – for entering):</p>
 
-  <input type="number" id="i1" placeholder="I₁ (A)">  
-  <input type="number" id="i2" placeholder="I₂ (A)">  
-  <input type="number" id="i3" placeholder="I₃ (A)">  
+  <input type="number" id="i1" placeholder="I₁ (A)">
+  <input type="number" id="i2" placeholder="I₂ (A)">
+  <input type="number" id="i3" placeholder="I₃ (A)">
+  <br>
   <button onclick="solveKCL()">Solve</button>
 
   <h3 id="result"></h3>
 
   <script>
     function solveKCL() {
-      let i1 = parseFloat(document.getElementById("i1").value) || 0;
-      let i2 = parseFloat(document.getElementById("i2").value) || 0;
-      let i3 = parseFloat(document.getElementById("i3").value) || 0;
+      const i1 = parseFloat(document.getElementById('i1').value) || 0;
+      const i2 = parseFloat(document.getElementById('i2').value) || 0;
+      const i3 = parseFloat(document.getElementById('i3').value) || 0;
 
-      let sum = i1 + i2 + i3;
-      let resultText = Math.abs(sum) < 0.001
-        ? "✅ KCL satisfied: ΣI = 0"
-        : "❌ KCL not satisfied, ΣI = " + sum.toFixed(2) + " A";
+      const sum = i1 + i2 + i3;
+      const result = document.getElementById('result');
 
-      document.getElementById("result").innerText = resultText;
+      if (Math.abs(sum) < 0.0001) {
+        result.innerHTML = "✅ KCL satisfied, ΣI = 0.00 A";
+        result.style.color = "green";
+      } else {
+        result.innerHTML = `❌ KCL not satisfied, ΣI = ${sum.toFixed(2)} A`;
+        result.style.color = "red";
+      }
     }
   </script>
 </body>
