@@ -1,60 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kirchhoff’s Law Solver</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kirchhoff’s Circuit Solver</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* 🔹 Header Bar */
+    .header {
+      background: #002b5b;
+      width: 100%;
+      color: white;
       text-align: center;
-      margin-top: 50px;
+      padding: 15px 0;
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
+
+    /* 🔹 Main Box */
+    .container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
     input {
-      margin: 5px;
-      padding: 8px;
-      width: 120px;
+      width: 80%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: 0.3s;
     }
+
+    input:focus {
+      border-color: #4facfe;
+      outline: none;
+    }
+
     button {
-      padding: 8px 16px;
+      background: #4facfe;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
-      font-weight: bold;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: 0.3s;
     }
+
+    button:hover {
+      background: #00c3ff;
+      transform: scale(1.05);
+    }
+
     #result {
-      font-size: 18px;
-      margin-top: 20px;
+      margin-top: 15px;
       font-weight: bold;
+      color: #333;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 10px;
+      font-size: 13px;
+      color: white;
+      opacity: 0.8;
     }
   </style>
 </head>
 <body>
-  <h2>Kirchhoff’s Current Law Calculator</h2>
-  <p>Enter currents leaving or entering a node (use + for leaving, – for entering):</p>
+  <div class="header">
+    ⚡ Kirchhoff’s Circuit Solver
+  </div>
 
-  <input type="number" id="i1" placeholder="I₁ (A)">
-  <input type="number" id="i2" placeholder="I₂ (A)">
-  <input type="number" id="i3" placeholder="I₃ (A)">
-  <br>
-  <button onclick="solveKCL()">Solve</button>
+  <div class="container">
+    <h2>Kirchhoff’s Current Law Calculator</h2>
+    <p>Enter currents leaving or entering a node (use + for leaving, – for entering):</p>
 
-  <h3 id="result"></h3>
+    <input type="number" id="i1" placeholder="I₁ (A)">
+    <input type="number" id="i2" placeholder="I₂ (A)">
+    <input type="number" id="i3" placeholder="I₃ (A)">
+    <br>
+    <button onclick="solveKCL()">Solve</button>
+
+    <h3 id="result"></h3>
+  </div>
+
+  <footer>
+    © 2025 Kirchhoff’s Solver | Designed by Vizard Tech
+  </footer>
 
   <script>
     function solveKCL() {
-      const i1 = parseFloat(document.getElementById('i1').value) || 0;
-      const i2 = parseFloat(document.getElementById('i2').value) || 0;
-      const i3 = parseFloat(document.getElementById('i3').value) || 0;
+      let i1 = parseFloat(document.getElementById("i1").value) || 0;
+      let i2 = parseFloat(document.getElementById("i2").value) || 0;
+      let i3 = parseFloat(document.getElementById("i3").value) || 0;
+      let sum = i1 + i2 + i3;
 
-      const sum = i1 + i2 + i3;
-      const result = document.getElementById('result');
-
-      if (Math.abs(sum) < 0.0001) {
-        result.innerHTML = "✅ KCL satisfied, ΣI = 0.00 A";
-        result.style.color = "green";
-      } else {
-        result.innerHTML = `❌ KCL not satisfied, ΣI = ${sum.toFixed(2)} A`;
-        result.style.color = "red";
-      }
+      let resultText = (Math.abs(sum) < 0.0001)
+        ? "✅ KCL is satisfied (ΣI = 0)"
+        : "❌ KCL not satisfied (ΣI = " + sum.toFixed(2) + " A)";
+      document.getElementById("result").innerText = resultText;
     }
   </script>
 </body>
